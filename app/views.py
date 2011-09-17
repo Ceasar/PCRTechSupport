@@ -22,13 +22,13 @@ def unpack(recommended):
 
 
 def index(request):
-  context = RequestContext({})
+  context = RequestContext(request, {})
   user = request.user
   context['recommended'] = unpack(recommend(user)[:5])
   return render_to_response('index.html', context)
 
 def course(request, id):
-  context = RequestContext(api('course', id))
+  context = RequestContext(request, api('course', id))
   user = request.user
   context['user'] = user
   context['recommended'] = unpack(recommend(user)[:5])
