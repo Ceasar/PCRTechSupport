@@ -9,6 +9,7 @@ print "autodiscovered.."
 
 urlpatterns = patterns('',
     (r'^cart', cart),
+    (r'^options', options),
     (r'^course/(\d+)/$', course),
     (r'^semester/(\d{4})/(\w+)/$', semester),
     (r'^admin/', include(admin.site.urls)),
