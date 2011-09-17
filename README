@@ -1,5 +1,16 @@
 TODO:
 -Build some templates up, make them pretty.
--Get recommendation engine working.
+-Get recommendation engine working. 
 -username AND password for superuser is ceasar. Create more if you want.
 
+PAGES:
+-localhost:8000/admin gets access to the admin
+-localhost:8000 is the index
+-localhost:8000/courses/NUM queries the API and return all of the object in the result tag. This should describe the course and have a few recommendations.
+-localhost:8000/semester/YEAR/SEMESTER/ where SEMESTER is in (F, S, or U) gets the logged in user's Semester object, which is a list of courses they took in that semester. A person must be logged in for this page to work.
+-localhost:8000/cart/ is not implemented yet at all, but would be a page like semester, except with a cart object.
+
+The templates for the pages are in front-end/templates. Read up on Django template syntax to build them out right. Do NOT edit regristation/login.html unless you get what's going on. Ideally, we should also have base.html for any style things that get repeated (ie, headers and footers).
+
+RECOMMENDATION:
+-Not sure how this should work exactly. I have a file app/recommendation.py with a recommend function that should be overwritten. Add arguments as needed (and modify the views as appropriate).
