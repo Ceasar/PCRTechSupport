@@ -5,8 +5,8 @@ from app.views import *
 # admin.autodiscover()
 
 urlpatterns = patterns('',
-    (r'cart', cart),
-    (r'^course', course),
+    (r'^cart', cart),
+    (r'^course/(\d+)/$', course),
     (r'', index),
 )
 
