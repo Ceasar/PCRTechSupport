@@ -60,8 +60,8 @@ def dept_courses(dept):
 
 def options(request):
   dept = request.GET['dept']
-  context = {'courses': [c.name for c in dept_courses(dept)]}
-  return render_to_response(options.html, context)
+  context = {'courses': dept_courses(dept)}
+  return render_to_response("options.html", context)
 
 def index(request):
   context = RequestContext(request, {})
