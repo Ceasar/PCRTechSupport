@@ -44,6 +44,7 @@ def get_courses():
 def index(request):
   context = RequestContext(request, {})
   user = request.user
+  context['courses'] = get_courses()
   context['recommended'] = unpack(recommend(user)[:5])
   return render_to_response('index.html', context)
 
@@ -60,6 +61,7 @@ def course(request, id):
 def cart(request):
   context = {}
   user = request.user
+  context['courses'] = get_courses()
   context['user'] = user
   context['recommended'] = unpack(recommend(user)[:5])
   return render_to_response('cart.html', context)
@@ -68,6 +70,7 @@ def cart(request):
 def semester(request, year, semester):
   context = {}
   user = request.user
+  context['courses'] = get_courses()
   context['user'] = user
   semester = Semester.objects.get(owner=user, year=year, semester=semester)
 
@@ -76,6 +79,16 @@ def semester(request, year, semester):
   context['recommended'] = unpack(recommend(user)[:5])
   context = RequestContext(request, context)
   return render_to_response('semester.html', context)
+
+
+@login_required
+def transcript_import(request):
+  context = RequestContext(request, {})
+  return render_to_response('transcript_import.html', context)
+
+@login_required
+def transcript_import_submit(request):
+  return HttpResponse(request.POST['courses'])
 
 from django.contrib.auth import authenticate, login
 

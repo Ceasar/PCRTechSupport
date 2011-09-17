@@ -4,11 +4,19 @@
 <head>
 
   <link rel="stylesheet" href="{{STATIC_URL}}css/base.css">
+  <link rel="stylesheet" href="{{STATIC_URL}}css/chosen.css">
 
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
   <script src="{{STATIC_URL}}js/base.js"></script>
+  <script src="{{STATIC_URL}}js/chosen.jquery.min.js"></script>
 
   <title>{% block title %}Penn Course Planner{% endblock %}</title>
+
+  <script type="text/javascript">
+    $(document).ready(function() { 
+      $(".chzn-select").chosen();
+    });
+  </script>
 
 </head>
 
@@ -17,6 +25,14 @@
   <div id="title">
     <img src="http://www.seas.upenn.edu/~kevinsu/Logo.png" height="72" />
   </div>
+
+  <br />
+
+  <select data-placeholder="Find a class" class="chzn-select" multiple style="width: 350px;">
+    {% for course in courses %}
+    <option value="{{course.name}}">{{course.name}}</option>
+    {% endfor %}
+  </select>
 
   {% block content %}{% endblock %}
 
