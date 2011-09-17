@@ -1,0 +1,15 @@
+<html>
+  <body>
+    <p>Welcome {{user.first_name}}!</p>
+    <h2>Course in my semester</h2>
+    {{semester}}
+    {% for course in semester.courses.all %}
+      {{course.course_id}}
+    {% endfor %}
+    <h3>We recommend</h3>
+    {% for course in recommended %}
+      {{course.name}}
+    {% endfor %}
+
+  </body>
+</html>
