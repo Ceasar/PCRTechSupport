@@ -51,6 +51,13 @@ def get_courses():
     pickle.dump(courses, open("coursehistory.p", "wb"))
   return courses
 
+def dept_courses(dept):
+  raw_data = api('dept', dept)
+  courses = []
+  for history in raw_data['histories']:
+    courses.append(history['name'])
+  return courses
+
 
 def index(request):
   context = RequestContext(request, {})
