@@ -9,13 +9,14 @@ var REGEX_COURSE = /^\s*(\w{2,4})\s+(\d{3})/;
 var SEMESTERS = {Spring: "a", Summer: "b", Fall: "c"};
 var FIRST_LINE = "(parsed)";
 
-function lines() {
+function getLines() {
     return document.getElementById("transcript").value.split("\n");
 }
 
-function parseTranscript(lines) {
+function parseTranscript() {
+    lines = getLines();
     if (lines[0] == "(parsed)") {
-        return lines.join("\n");
+        return;
     }
 
     var parsing = false;
@@ -41,16 +42,15 @@ function parseTranscript(lines) {
     for (var semester in data) {
         output += semester + ":" + data[semester] + "\n";
     }
-    return output;
+    document.getElementById('transcript').value = output;
 }
 
 function submitCheck() {
-    if (lines()[0] != FIRST_LINE) {
+    if (getLines()[0] != FIRST_LINE) {
         alert('Please parse the transcript first.');
         return false;
     }
-    alert('actually, this button does not do anything');
-    return true;
+   return true;
 }
 
 </script>
@@ -69,9 +69,10 @@ function submitCheck() {
     <li>Reenable your internet connection.</li>
     <li>Click "Submit."</li>
 </ul>
-<form onSubmit="return submitCheck();">
-<textarea cols="80" rows="20" id="transcript"></textarea><br>
-<input type="button" value="Parse" onClick="document.getElementById('transcript').value = parseTranscript(lines());"/>
+<form onSubmit="return submitCheck();" action="transcript-import/submit" method="post">
+{% csrf_token %} 
+<textarea cols="80" rows="20" id="transcript" name="courses"></textarea><br>
+<input type="button" value="Parse" onClick="parseTranscript();"/>
 <input type="submit"/>
 </form>
 
