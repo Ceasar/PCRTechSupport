@@ -22,7 +22,7 @@ def unpack(recommended):
 
 
 def index(request):
-  context = {}
+  context = RequestContext({})
   return render_to_response('index.html', context)
 
 def course(request, id):
