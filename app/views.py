@@ -1,6 +1,7 @@
 import urllib
 import urllib2
 import json
+import pickle
 
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
@@ -20,6 +21,25 @@ def api(*args):
 def unpack(recommended):
   return [api('course', str(id)) for id in recommended]
 
+def get_courses():
+  print "getting courses"
+  try:
+    courses = pickle.load(open("coursehistory.p", "r"))
+    print "found pickle.."
+  except:
+    print "no pickle"
+    i = 1
+    courses = []
+    while True:
+      print i
+      try:
+        courses.append(api('coursehistory', str(i)))
+      except:
+        break
+      i += 1
+    pickle.dump(courses, open("coursehistory.p", "wb"))
+  return courses
+
 
 def index(request):
   context = RequestContext(request, {})
@@ -30,6 +50,7 @@ def index(request):
 def course(request, id):
   context = RequestContext(request, api('course', id))
   user = request.user
+  context['courses'] = get_courses()
   context['user'] = user
   context['recommended'] = unpack(recommend(user)[:5])
   context['reviews'] = api('course', id, 'reviews')
