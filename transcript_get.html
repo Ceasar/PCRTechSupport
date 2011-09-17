@@ -1,0 +1,79 @@
+<!doctype html>
+<html><head>
+<title>Transcript Parser</title>
+<script>
+
+var TRANSCRIPT_START = "* * * * * UNIVERSITY OF PENNSYLVANIA COURSE WORK * * * * * *";
+var REGEX_SEMESTER = /^(Spring|Summer|Fall) (\d{4})/;
+var REGEX_COURSE = /^\s*(\w{2,4})\s+(\d{3})/;
+var SEMESTERS = {Spring: "a", Summer: "b", Fall: "c"};
+var FIRST_LINE = "(parsed)";
+
+function lines() {
+    return document.getElementById("transcript").value.split("\n");
+}
+
+function parseTranscript(lines) {
+    if (lines[0] == "(parsed)") {
+        return lines.join("\n");
+    }
+
+    var parsing = false;
+    var currentSemester = "unknown";
+    var data = {}
+    for (var i=0, len = lines.length; i<len; i++) {
+        var line = lines[i];
+
+        if (line.indexOf("* *") == 0) {
+            parsing = (line == TRANSCRIPT_START);
+        } else if (parsing) {
+            var semesterMatch = REGEX_SEMESTER.exec(line);
+            var courseMatch = REGEX_COURSE.exec(line);
+            if (semesterMatch) {
+                currentSemester = semesterMatch[2] + SEMESTERS[semesterMatch[1]];
+            } else if (courseMatch) {
+                data[currentSemester] = data[currentSemester] || [];
+                data[currentSemester].push(courseMatch[1] + " " + courseMatch[2])
+            }
+        }
+    }
+    var output = FIRST_LINE + "\n";
+    for (var semester in data) {
+        output += semester + ":" + data[semester] + "\n";
+    }
+    return output;
+}
+
+function submitCheck() {
+    if (lines()[0] != FIRST_LINE) {
+        alert('Please parse the transcript first.');
+        return false;
+    }
+    alert('actually, this button does not do anything');
+    return true;
+}
+
+</script>
+</head>
+
+<body>
+<h1>Transcript Parser</h1>
+<p>We'd like to hear what courses you've taken. However, we don't want to know what your grades were, so this tool removes them from the text that's submitted to us.</p>
+<ul>
+    <li>Go to <a href="https://medley06.isc-seo.upenn.edu/pennInTouch/jsp/fast2.do?1=2&access=student">Penn InTouch</a>. Go to "Transcript and GPA" under "Academic Records."</li>
+    <li><i>(optional)</i> Disable your internet connection.</li>
+    <li>On your transcript page, select all and copy.</li>
+    <li>Paste into the text box below.</li>
+    <li>Click "Parse."</li>
+    <li><i>(optional)</i> Copy the text in the textbox, reload this page, and paste back into the textbox.</li>
+    <li>Reenable your internet connection.</li>
+    <li>Click "Submit."</li>
+</ul>
+<form onSubmit="return submitCheck();">
+<textarea cols="80" rows="20" id="transcript"></textarea><br>
+<input type="button" value="Parse" onClick="document.getElementById('transcript').value = parseTranscript(lines());"/>
+<input type="submit"/>
+</form>
+
+
+</body> </html>
