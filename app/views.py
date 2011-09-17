@@ -21,6 +21,17 @@ def api(*args):
 def unpack(recommended):
   return [api('course', str(id)) for id in recommended]
 
+def get_depts():
+  print "getting depts"
+  raw_depts = api('depts')
+  depts = []
+  for dept in raw_depts['values']:
+    print dept
+    print dept['id']
+    depts.append(dept['id'])
+    print depts
+  return depts
+
 def get_courses():
   print "getting courses"
   try:
@@ -44,14 +55,14 @@ def get_courses():
 def index(request):
   context = RequestContext(request, {})
   user = request.user
-  context['courses'] = get_courses()
+  context['courses'] = get_depts()
   context['recommended'] = unpack(recommend(user)[:5])
   return render_to_response('index.html', context)
 
 def course(request, id):
   context = RequestContext(request, api('course', id))
   user = request.user
-  context['courses'] = get_courses()
+  context['courses'] = get_depts()
   context['user'] = user
   context['recommended'] = unpack(recommend(user)[:5])
   context['reviews'] = api('course', id, 'reviews')
@@ -61,7 +72,7 @@ def course(request, id):
 def cart(request):
   context = {}
   user = request.user
-  context['courses'] = get_courses()
+  context['courses'] = get_depts()
   context['user'] = user
   context['recommended'] = unpack(recommend(user)[:5])
   return render_to_response('cart.html', context)
@@ -70,7 +81,7 @@ def cart(request):
 def semester(request, year, semester):
   context = {}
   user = request.user
-  context['courses'] = get_courses()
+  context['courses'] = get_depts()
   context['user'] = user
   semester = Semester.objects.get(owner=user, year=year, semester=semester)
 

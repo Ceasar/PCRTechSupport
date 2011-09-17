@@ -13,6 +13,7 @@
 {% for value in reviews.values %}
 {% for field, rating in value.ratings.items %}
 <span>{{field}}: {{rating}}</span>
+  {% if field == 
 <br/>
 {% endfor %}
 {% endfor %}
