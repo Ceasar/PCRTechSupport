@@ -7,16 +7,10 @@
   <link rel="stylesheet" href="{{STATIC_URL}}css/chosen.css">
 
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
-  <script src="{{STATIC_URL}}js/base.js"></script>
   <script src="{{STATIC_URL}}js/chosen.jquery.min.js"></script>
+  <script src="{{STATIC_URL}}js/base.js"></script>
 
   <title>{% block title %}Penn Course Planner{% endblock %}</title>
-
-  <script type="text/javascript">
-    $(document).ready(function() { 
-      $(".chzn-select").chosen();
-    });
-  </script>
 
 </head>
 
@@ -28,11 +22,19 @@
 
   <br />
 
-  <select data-placeholder="Find a class" class="chzn-select" multiple style="width: 350px;">
-    {% for course in courses %}
-    <option value="{{course}}">{{course}}</option>
-    {% endfor %}
-  </select>
+  <div id="search">
+    <div>Search for a Class:</div>
+    <select id="search-dept" data-placeholder="Select a Dept" class="chzn-select" style="width: 150px;">
+      <option value></option>
+      {% for course in courses %}
+      <option value="{{course}}">{{course}}</option>
+      {% endfor %}
+    </select>
+
+    <select id="search-course" data-placeholder="Select a Class" style="width: 150px; display: none;">
+      <option value></option>
+    </select>
+  </div>
 
   {% block content %}{% endblock %}
 
