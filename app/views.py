@@ -23,6 +23,8 @@ def unpack(recommended):
 
 def index(request):
   context = RequestContext({})
+  user = request.user
+  context['recommended'] = unpack(recommend(user)[:5])
   return render_to_response('index.html', context)
 
 def course(request, id):
@@ -37,6 +39,8 @@ def course(request, id):
 def cart(request):
   context = {}
   user = request.user
+  context['user'] = user
+  context['recommended'] = unpack(recommend(user)[:5])
   return render_to_response('cart.html', context)
 
 @login_required

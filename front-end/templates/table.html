@@ -1,0 +1,23 @@
+{% load table %}
+
+<div>
+  <table>
+    <thead>
+      <tr>
+        {% for cell in table.head %}
+        <th scope="col" class="column_{{cell}}">{{cell}}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in table.body %}
+      <tr>
+        {% for cell in row %}
+        <td>{{cell}}</td>
+        {% endfor %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
