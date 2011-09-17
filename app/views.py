@@ -48,7 +48,10 @@ def semester(request, year, semester):
   context = {}
   user = request.user
   context['user'] = user
-  context['semester'] = Semester.objects.get(owner=user, year=year, semester=semester)
+  semester = Semester.objects.get(owner=user, year=year, semester=semester)
+
+  context['semester'] = semester
+  context['courses'] = unpack([s.course_id for s in semester.courses.all()])
   context['recommended'] = unpack(recommend(user)[:5])
   context = RequestContext(request, context)
   return render_to_response('semester.html', context)
