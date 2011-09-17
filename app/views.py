@@ -28,7 +28,7 @@ def index(request):
   return render_to_response('index.html', context)
 
 def course(request, id):
-  context = api('course', id)
+  context = RequestContext(api('course', id))
   user = request.user
   context['user'] = user
   context['recommended'] = unpack(recommend(user)[:5])
