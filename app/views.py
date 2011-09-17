@@ -56,6 +56,15 @@ def semester(request, year, semester):
   context = RequestContext(request, context)
   return render_to_response('semester.html', context)
 
+@login_required
+def transcript_import(request):
+  context = RequestContext(request, {})
+  return render_to_response('transcript_import.html', context)
+
+@login_required
+def transcript_import_submit(request):
+  return HttpResponse(request.POST['courses'])
+
 from django.contrib.auth import authenticate, login
 
 def user_login(request):
