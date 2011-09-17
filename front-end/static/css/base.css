@@ -1,2 +1,9 @@
 @charset "utf-8";
 
+#title {
+    background: lightgray;
+}
+
+#title img {
+    padding: 5px 0px 0px 10px;
+}
