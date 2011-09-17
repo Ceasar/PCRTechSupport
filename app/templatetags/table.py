@@ -7,6 +7,11 @@ from templatetag_sugar.register import tag
 
 register = template.Library()
 
+class Table(object):
+  def __init__(self, head, body):
+    self.head = head
+    self.body = [zip(head, row) for row in body]
+
 @tag(register, [Variable()])
 def table(context, table):
   new_context = {'table': table}
