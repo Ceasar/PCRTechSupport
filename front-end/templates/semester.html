@@ -1,7 +1,7 @@
+{% extends "base.html" %}
 {% load list %}
 
-<html>
-  <body>
+{% block content %}
     <p>Welcome {{user.first_name}}!</p>
     <h2>Courses in {{semester.get_semester_display}} {{semester.year}}</h2>
     {% list courses %}
@@ -10,6 +10,4 @@
     {% for course in recommended %}
       {{course.name}}
     {% endfor %}
-
-  </body>
-</html>
+{% endblock %}
