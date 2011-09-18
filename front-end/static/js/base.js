@@ -3,9 +3,11 @@
 $(document).ready(function() {
     $(".chzn-select").chosen();
     $("#search-dept").change(function() {
-	$.get("http://localhost:8000/options.html", { dept: $(this).val() },
+	$.get("http://localhost:8000/options", { dept: $(this).val() },
 	      function(data) {
-		  $("#search-course").append(data).show().chosen();
+		  $("#search-course_chzn").remove();
+		  $("#search-course").removeClass("chzn-done");
+		  $("#search-course").html(data).show().chosen();
 	      });
     });
 });
