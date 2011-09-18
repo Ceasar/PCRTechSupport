@@ -60,6 +60,7 @@ def options(request):
   context = {'courses': dept_courses(dept)}
   return render_to_response("options.html", context)
 
+@login_required
 def index(request):
   context = RequestContext(request, {})
   user = request.user
