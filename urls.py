@@ -8,7 +8,7 @@ print admin.autodiscover()
 print "autodiscovered.."
 
 urlpatterns = patterns('',
-    (r'^recommended', recommended),
+    (r'^recommended/', recommended),
     (r'^options', options),
     (r'^course/(\w+)/(\w+)/?$', course),
     (r'^course/(\w+)/?$', course),

@@ -68,9 +68,9 @@ def index(request):
   context['recommended'] = unpack(recommend(user)[:5])
   return render_to_response('index.html', context)
 
-def recommened(request):
+def recommended(request):
   context = {}
-  context['courses'] = unpack(recommend(user)[:5])
+  context['courses'] = unpack(recommend(request.user)[:5])
   return render_to_response('recommended.html', context)
 
 
