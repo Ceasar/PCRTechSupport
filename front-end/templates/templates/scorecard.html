@@ -1,11 +1,4 @@
-
-{% for row in scorecard %}
-<div>
-  <p>{{row.title}}</p>
-  <p>{{row.subtitle}}</p>
-  {% for scorebox in row %}
-  <p>{{scorebox.number}}</p>
-  <p>{{scorebox.desription}}</p>
-  {% endfor %}
+<div class="scorebox">
+  <span class="attribute">{{attribute}}</span>
+  <span>{{score}}</span>
 </div>
-{% endfor %}

@@ -1,7 +1,32 @@
 {% extends "base.html" %}
+
 {% block content %}
-    <p>
-    Ceasar was here.
-    {{STATIC_URL}}
-    </p>
+
+<div id="banner">
+
+</div>
+
+
+<!-- missing description!-->
+
+{% for value in reviews.values %}
+{% for field, rating in value.ratings.items %}
+<span>{{field}}: {{rating}}</span>
+<br/>
+{% endfor %}
+{% endfor %}
+
+<div class="recommended">
+  <h3>Other Classes You Should Look at</h3>
+  <div class="recommended_courses">
+    <ul>
+      {% for course in recommended %}
+      <li>
+      {{course.name}}
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+
 {% endblock %}
