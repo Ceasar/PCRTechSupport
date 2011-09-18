@@ -68,6 +68,23 @@ def index(request):
   context['recommended'] = unpack(recommend(user)[:5])
   return render_to_response('index.html', context)
 
+def add(request, year, semester, dept, code):
+  try:
+    user = request.user
+    name = " ".join([dept, code])
+    print 'name', name
+    course = Course.objects.get(name=name)
+    print 'course', course
+    print user, year, semester
+    if not semester[0] in ['F', 'U', 'S']:
+      raise
+    semester, _ = Semester.objects.get_or_create(owner=user, year=year, semester=semester[0])
+    print "semester", semester
+    semester.courses.add(course)
+    return HttpResponse("Course added!")
+  except Exception as e:
+    print e
+    return HttpResponse("%s Failed!" % request.user)
 
 
 def course(request, *args):
