@@ -76,7 +76,7 @@ def recommended(request):
 
 def add(request, dept, code):
   try:
-    semester, _ = Semester.objects.get_or_create(owner=user, defaults={'year': 2011, 'semester': 'F'})
+    semester, _ = Semester.objects.get_or_create(owner=request.user, defaults={'year': 2011, 'semester': 'F'})
     print "semester", semester
     if dept == 0 and code == 0:
       pass
