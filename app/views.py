@@ -213,10 +213,6 @@ def recommendations_admin_generate(request):
                   logprob = log(count * 1.0 / counts[course_given])).save()
 
   print "done!"
-  return HttpResponse("Recommendation probabilities regenerated.")
-
-@login_required
-def recommendations(request):
   user = request.user
   mycourses = [c.course_id for c in Course.objects.filter(semester__owner=user)]
   logprobforme = [] # (id, name, prob)
