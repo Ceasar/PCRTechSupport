@@ -23,7 +23,7 @@ $(document).ready(function() {
 			    function(data) {
 				$("div.classList").html(data);
 			    });
-		      $("#search-course").hide();
+		      $("#search-course_chzn").hide();
 		      $("div.recommended").html('<img src="http://www.seas.upenn.edu/~kevinsu/spiral.gif" height="60">');
 		      $.get("http://localhost:8000/recommendations-admin/generate",
 			    function(data) {
