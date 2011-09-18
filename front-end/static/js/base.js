@@ -32,7 +32,7 @@ $(document).ready(function() {
 	     $("div.classList").html(data);
 	 });
 
-    $.get("http://localhost:8000/recommendations/",
+    $.get("http://localhost:8000/recommendations-admin/generate",
 	  function(data) {
 	      $("div.recommended").html(data);
 	  });
