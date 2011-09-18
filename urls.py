@@ -8,7 +8,6 @@ print admin.autodiscover()
 print "autodiscovered.."
 
 urlpatterns = patterns('',
-    (r'^cart', cart),
     (r'^options', options),
     (r'^course/(\w+)/(\w+)/?$', course),
     (r'^course/(\w+)/?$', course),
