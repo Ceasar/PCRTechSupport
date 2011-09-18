@@ -68,6 +68,12 @@ def index(request):
   context['recommended'] = unpack(recommend(user)[:5])
   return render_to_response('index.html', context)
 
+def recommened(request):
+  context = {}
+  context['courses'] = unpack(recommend(user)[:5])
+  return render_to_response('recommended.html', context)
+
+
 def add(request, dept, code):
   try:
     semester, _ = Semester.objects.get_or_create(owner=user, defaults={'year': 2011, 'semester': 'F'})
