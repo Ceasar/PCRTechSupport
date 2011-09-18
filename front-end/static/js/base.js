@@ -20,8 +20,12 @@ $(document).ready(function() {
 		  $("#addClass").click(function(data) {
 		      $.colorbox.close();
 		      $.get("http://localhost:8000/add/" + urlCourse,
-			    function(data){
-				$(".classList").html(data);
+			    function(data) {
+				$("div.classList").html(data);
+			    });
+		      $.get("http://localhost:8000/recommendations-admin/generate",
+			    function(data) {
+				$("div.recommended").html(data);
 			    });
 		  });
 	      });
