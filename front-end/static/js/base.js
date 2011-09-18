@@ -11,15 +11,11 @@ $(document).ready(function() {
 	      });
     });
     $("#search-course").change(function() {
-	var url = "http://localhost:8000/course/" + ($(this).val()).replace(" ", "/");
+	$("div#classInfo").html('<img src="http://www.seas.upenn.edu/~kevinsu/spiral.gif" height="200" />');
+	var url = "http://localhost:8000/course/" + ($(this).val()).replace(" ", "/") + "/";
 	$.get(url,
 	      function(data) {
-		  $.colorbox({html: data});
+		  $("div#classInfo").html(data);
 	      });
     });
 });
-
-
-
-
-
