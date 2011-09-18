@@ -25,24 +25,6 @@
 
   <br />
 
-  <div id="search">
-    <div>Search for a Class:</div>
-    <select id="search-dept" data-placeholder="Select a Dept" class="chzn-select" style="width: 150px;">
-      <option value></option>
-      {% for course in courses %}
-      <option value="{{course}}">{{course}}</option>
-      {% endfor %}
-    </select>
-
-    <select id="search-course" data-placeholder="Select a Class" style="width: 150px; display: none;">
-      <option value></option>
-    </select>
-
-  </div>
-
-  <div id="classInfo">
-  </div>
-
   {% block content %}{% endblock %}
 
 </body>
