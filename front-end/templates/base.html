@@ -2,13 +2,16 @@
 <html lang="en">
 
 <head>
-
+  
   <link rel="stylesheet" href="{{STATIC_URL}}css/base.css">
   <link rel="stylesheet" href="{{STATIC_URL}}css/chosen.css">
+  <link rel="stylesheet" href="{{STATIC_URL}}css/colorbox.css">
 
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
   <script src="{{STATIC_URL}}js/chosen.jquery.min.js"></script>
+  <script src="{{STATIC_URL}}js/jquery.colorbox-min.js"></script>
   <script src="{{STATIC_URL}}js/base.js"></script>
+
 
   <title>{% block title %}Penn Course Planner{% endblock %}</title>
 
@@ -34,6 +37,10 @@
     <select id="search-course" data-placeholder="Select a Class" style="width: 150px; display: none;">
       <option value></option>
     </select>
+
+  </div>
+
+  <div id="classInfo">
   </div>
 
   {% block content %}{% endblock %}
