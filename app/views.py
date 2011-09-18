@@ -8,6 +8,11 @@ from django.shortcuts import render_to_response
 from django.template import Context, RequestContext
 from django.contrib.auth.decorators import login_required
 
+from collections import defaultdict
+from operator import itemgetter
+from math import log
+from django.db.models import Sum
+
 from models import *
 from recommend import recommend
 
@@ -170,6 +175,58 @@ def transcript_import_submit(request):
     
   return HttpResponse("<br>".join(successes) + "<hr>" + "<br>".join(errors))
 
+@login_required
+def recommendations_admin_clear(request):
+  CourseLogProb.objects.all().delete()
+  return HttpResponse("Recommendation probabilities cleared.")
+
+@login_required
+def recommendations_admin_generate(request):
+  CourseLogProb.objects.all().delete()
+  print "calculating counts"
+  counts = defaultdict(int) # predicate
+  condcounts = defaultdict(int) # (predicate, given)
+  for user in User.objects.all():
+    courses = [c.course_id for c in Course.objects.filter(semester__owner=user)]
+    for course in courses:
+      counts[course] += 1
+      for course2 in courses:
+        condcounts[course2, course] += 1
+
+  print "filling database (be patient...)"
+  n_users = User.objects.count()
+  for (course, count) in counts.iteritems():
+    CourseLogProb(predicate_cid=course, given_cid=-1,
+                  logprob = log(count * 1.0 / n_users)).save()
+
+  for ((course_pred, course_given), count) in condcounts.iteritems():
+    CourseLogProb(predicate_cid=course_pred, given_cid=course_given,
+                  logprob = log(count * 1.0 / counts[course_given])).save()
+
+  print "done!"
+  return HttpResponse("Recommendation probabilities regenerated.")
+
+@login_required
+def recommendations(request):
+  user = request.user
+  mycourses = [c.course_id for c in Course.objects.filter(semester__owner=user)]
+  logprobforme = [] # (id, name, prob)
+  
+  prior_probs = dict((c.predicate_cid, c.logprob)
+                     for c in CourseLogProb.objects.filter(given_cid=-1))
+  summed_probs = dict((d['given_cid'],d['logprob'])
+                      for d in CourseLogProb.objects.filter(predicate_cid__in=mycourses).values('given_cid').annotate(logprob=Sum('logprob')))
+  for (idx, course) in enumerate(Course.objects.all()):
+    cid = course.course_id
+    p0 = prior_probs.get(cid,0)
+    ps = summed_probs.get(cid,0)
+    logprobforme.append((cid, course.name, p0 + ps))
+  mycourses_set = set(mycourses)
+  recommendations = sorted(((name, prob) for (cid,name,prob) in logprobforme
+                            if cid not in mycourses_set),
+                           key=itemgetter(1))[:10]
+  return HttpResponse("<br>".join("%s (%f)" % t for t in recommendations))
+  
 from django.contrib.auth import authenticate, login
 
 def user_login(request):
