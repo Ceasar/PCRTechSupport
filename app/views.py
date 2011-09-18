@@ -83,9 +83,9 @@ def add(request, dept, code):
   try:
     semester, _ = Semester.objects.get_or_create(owner=request.user, defaults={'year': 2011, 'semester': 'F'})
     print "semester", semester
-    if int(dept) == 0 and int(code) == 0:
-      pass
-    else:
+    try:
+      int(dept)
+    except:
       user = request.user
       name = " ".join([dept, code])
       print 'name', name
