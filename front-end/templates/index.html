@@ -2,24 +2,45 @@
 
 {% block content %}
 
-<div id="search">
+<div id="global">
+  <div id="leftCol">
+  </div>
+  <div id="contentCol">
+    <div id="headerArea">
+      <h2>
+        <span class="title">Your Classes</span>
+      </h2>
+    </div>
+    <div id="contentArea">
+      <div class="searchBox">
+        <div id="search">
+          <div class="padded">
+            <select id="search-dept" data-placeholder="Type a department's name to add a course..." class="chzn-select search">
+              <option value></option>
+              {% for course in courses %}
+              <option value="{{course}}">{{course}}</option>
+              {% endfor %}
+            </select>
+          </div>
 
-  <div>Search for a Class:</div>
-
-  <select id="search-dept" data-placeholder="Select a Dept" class="chzn-select" style="width: 150px;">
-    <option value></option>
-    {% for course in courses %}
-    <option value="{{course}}">{{course}}</option>
-    {% endfor %}
-  </select>
-
-  <select id="search-course" data-placeholder="Select a Class" style="width: 150px; display: none;">
-    <option value></option>
-  </select>
-  
+          <div class="padded">
+            <select class="search" id="search-course" data-placeholder="Select a Class" style="display: none;">
+              <option value></option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="classList"></div>
+    </div>
+    <div id="rightCol">
+      <div class="recommendBox">
+        <div class="uiSection">
+          <h3 class="suggestions">Course Suggestions</h3>
+        </div>
+        <div class="recommended"></div>
+      </div>
+    </div>
+  </div>
 </div>
-
-<div class="classList"></div>
-<div class="recommended"></div>
 
 {% endblock %}

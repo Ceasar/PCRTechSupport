@@ -230,7 +230,9 @@ def recommendations_admin_generate(request):
   recommendations = sorted(((name, prob) for (cid,name,prob) in logprobforme
                             if cid not in mycourses_set),
                            key=itemgetter(1))[:10]
-  return HttpResponse("<br>".join("%s (%f)" % t for t in recommendations))
+  context = {}
+  context['courses'] = [(str(r[0]), r[1]) for r in recommendations]
+  return render_to_response("recommended.html", context)
   
 from django.contrib.auth import authenticate, login
 

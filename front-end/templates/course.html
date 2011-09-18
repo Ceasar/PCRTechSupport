@@ -1,6 +1,4 @@
-<div id="banner">
-  
-</div>
+<div id="banner"/>
 
 <h2>{{name}}</h2>
 
@@ -9,17 +7,10 @@
 {% for value in reviews.values %}
 {% for field, rating in value.ratings.items %}
 <span>{{field}}: {{rating}}</span>
-  {% if field == 
 <br/>
 {% endfor %}
 {% endfor %}
 
-<div class="recommended">
-  <h3>Other Classes You Should Look at</h3>
-  {% for course in recommended %}
-  {{course.name}}
-  {% endfor %}
-</div>
 
 <div>
 <button type="button" id="addClass">I've Taken This</button>

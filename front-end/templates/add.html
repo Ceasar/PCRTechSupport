@@ -1,7 +1,12 @@
-<h2>Classes You've Taken</h2>
-
 <ul class="course_list">
-{% for course in semester.courses.all %}
-<li>{{course.name}}</li> 
-{% endfor %}
+  {% for course in semester.courses.all %}
+  <li>
+  <div class="block">
+    <span class="name">{{course.name}}</span>
+    <div class="remove">
+
+    </div>
+  </div>
+  </li> 
+  {% endfor %}
 </ul>

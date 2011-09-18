@@ -8,10 +8,174 @@
     padding: 5px 0px 0px 10px;
 }
 
-div {
+#global {
+  margin: 0 auto;
+  width: 981px;
+}
+
+#leftCol {
+  float: left;
+  padding: 20px 0 0 2px;
+  width: 179px;
+}
+
+body {
     font-family: Verdana, sans-serif;
+    font-size: 11px;
+    text-align: left;
 }
 
 ul {
     list-style: none;
+    margin-top: 0px;
+    margin-right: 0px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    padding-left: 0;
+}
+
+li {
+  width: 100%;
+}
+
+.recommendedCourses {
+  padding-left: 10px;
+  padding-bottom: 10px;
+}
+
+.suggestion {
+  padding-top: 3px;
+}
+
+.block {
+  border-style: solid;
+  border-width: 1px 0 0 0;
+  border-color: #E9E9E9;
+  height: 50px;
+  vertical-align: middle;
+  font-size: 16px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+
+.classList {
+  float: left;
+  width: 100%;
+}
+
+.suggestions {
+
+}
+
+
+.search {
+  vertical-align: middle;
+  height: 50px;
+  width: 400px;
+  padding-left: 20px;
+}
+
+.searchBox {
+  background-color: #F2F2F2;
+  border: 1px solid #CCC;
+}
+
+#headerArea {
+} 
+
+
+#contentCol {
+}
+
+.remove {
+  background-image: url(https://s-static.ak.facebook.com/rsrc.php/v1/yA/r/4WSewcWboV8.png);
+  height: 15px;
+  width: 15px;
+  float: right;
+  margin-top: 10px;
+}
+
+.suggestions {
+  padding-left: 10px;
+}
+
+.wrong {
+  background-image: url(https://s-static.ak.facebook.com/rsrc.php/v1/yx/r/ogYrclupeJV.png);
+  float: right;
+  height: 11px;
+  width: 11px;
+  margin-right: 5px;
+}
+
+img {
+  padding-top: 40px;
+  padding-left: 95px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-size: 13px;
+  margin: 0;
+  padding: 0;
+}
+
+h3 {
+  font-size: 11px;
+}
+
+.more {
+  padding-top: 10px;
+  padding-left: 10px;
+}
+
+.name {
+  padding-left: 10px;
+  vertical-align: middle;
+}
+
+.padded { 
+  padding-top: 10px;
+  padding-left: 20px;
+}
+
+
+.title {
+  font-weight: bold;
+  font-size: 16px;
+}
+.uiSection {
+  border-top-style: solid;
+  border-top-width:  1px;
+  border-top-color: #E2E2E2;
+  background-color: #F2F2F2;
+
+  height: 14px;
+
+  padding-top: 4px;
+  padding-right: 5px;
+  padding-bottom: 5px;
+
+  margin-bottom: 10px;
+}
+
+.recommended {
+  float: left;
+  width: 100%;
+}
+
+#contentArea {
+  float: left;
+  margin-right: 0;
+  padding-right: 0;
+  width: 439px;
+}
+
+#rightCol {
+  float: right;
+  padding-right: 20px;
+  width: 244px;
+}
+
+#search {
+  height: 80px;
 }

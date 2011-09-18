@@ -1,7 +1,6 @@
-<h2>Recommended For You</h2>
-
-<ul class="recommended">
+<ul class="recommendedCourses">
   {% for course in courses %}
-  <li>{{course.name}}</li>
+  <li class="suggestion">{{course|first}} ({{course|last}})<div class="wrong"></div></li>
   {% endfor %}
 </ul>
+<span class="more">See more suggestions</span>
