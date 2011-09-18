@@ -70,14 +70,17 @@ def index(request):
 
 def add(request, dept, code):
   try:
-    user = request.user
-    name = " ".join([dept, code])
-    print 'name', name
-    course = Course.objects.get(name=name)
-    print 'course', course
     semester, _ = Semester.objects.get_or_create(owner=user, defaults={'year': 2011, 'semester': 'F'})
     print "semester", semester
-    semester.courses.add(course)
+    if dept == 0 and code == 0:
+      pass
+    else:
+      user = request.user
+      name = " ".join([dept, code])
+      print 'name', name
+      course = Course.objects.get(name=name)
+      print 'course', course
+      semester.courses.add(course)
     context = {'semester': Semester.objects.get(owner=request.user)}
     return render_to_response('add.html', context)
   except Exception as e:
