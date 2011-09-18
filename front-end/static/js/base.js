@@ -24,6 +24,7 @@ $(document).ready(function() {
 				$("div.classList").html(data);
 			    });
 		      $("#search-course_chzn").hide();
+		      $("#search-dept_chzn").find("option:selected").removedAttr("selected");
 		      $("div.recommended").html('<img src="http://www.seas.upenn.edu/~kevinsu/spiral.gif" height="60">');
 		      $.get("http://localhost:8000/recommendations-admin/generate",
 			    function(data) {
