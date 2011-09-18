@@ -27,6 +27,13 @@ $(document).ready(function() {
 	      });
     });
    
+    $.get("http://localhost:8000/add/0/0/",
+	 function(data) {
+	     $("div.classList").html(data);
+	 });
 
-
+    $.get("http://localhost:8000/recommendations/",
+	  function(data) {
+	      $("div.recommended").html(data);
+	  });
 });
