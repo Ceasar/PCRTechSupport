@@ -10,4 +10,16 @@ $(document).ready(function() {
 		  $("#search-course").html(data).show().chosen();
 	      });
     });
+    $("#search-course").change(function() {
+	var url = "http://localhost:8000/course/" + ($(this).val()).replace(" ", "/");
+	$.get(url,
+	      function(data) {
+		  $("#classInfo").html(data);
+	      });
+    });
 });
+
+
+
+
+
