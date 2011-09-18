@@ -55,7 +55,6 @@ def dept_courses(dept):
     courses.append(history['name'])
   return courses
 
-
 def options(request):
   dept = request.GET['dept']
   context = {'courses': dept_courses(dept)}
@@ -78,10 +77,12 @@ def add(request, dept, code):
     semester, _ = Semester.objects.get_or_create(owner=user, defaults={'year': 2011, 'semester': 'F'})
     print "semester", semester
     semester.courses.add(course)
-    return HttpResponse("Course added!")
+    context = {'semester': Semester.objects.get(owner=request.user)}
+    return render_to_response('add.html', context)
   except Exception as e:
     print e
     return HttpResponse("%s Failed!" % request.user)
+
 
 
 def course(request, *args):
