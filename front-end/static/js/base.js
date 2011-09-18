@@ -1,6 +1,7 @@
 
 // On ready
 $(document).ready(function() {
+    
     $(".chzn-select").chosen();
     $("#search-dept").change(function() {
 	$.get("http://localhost:8000/options", { dept: $(this).val() },
@@ -11,11 +12,21 @@ $(document).ready(function() {
 	      });
     });
     $("#search-course").change(function() {
-	$("div#classInfo").html('<img src="http://www.seas.upenn.edu/~kevinsu/spiral.gif" height="200" />');
-	var url = "http://localhost:8000/course/" + ($(this).val()).replace(" ", "/") + "/";
+	var urlCourse = ($(this).val()).replace(" ", "/") + "/";
+	var url = "http://localhost:8000/course/" + urlCourse;
 	$.get(url,
 	      function(data) {
-		  $("div#classInfo").html(data);
+		  $.colorbox({html: data});
+		  $("#addClass").click(function(data) {
+		      $.colorbox.close();
+		      $.get("http://localhost:8000/add/" + urlCourse,
+			    function(data){
+				$(".classList").html(data);
+			    });
+		  });
 	      });
     });
+   
+
+
 });

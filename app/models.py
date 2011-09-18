@@ -38,3 +38,8 @@ class Semester(models.Model):
 
   def __str__(self):
     return "%s: %s %s" % (str(self.owner), str(self.year), str(self.semester))
+
+class CourseLogProb(models.Model):
+  predicate_cid = models.IntegerField()
+  given_cid = models.IntegerField()
+  logprob = models.FloatField()
