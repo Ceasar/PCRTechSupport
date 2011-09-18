@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class UserProfile(models.Model):
+  # At the moment, we aren't using this class (we're using User instead)
   user = models.OneToOneField(User)
   graduation_date = models.DateField()
 

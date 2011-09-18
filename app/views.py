@@ -68,6 +68,20 @@ def index(request):
   context['recommended'] = unpack(recommend(user)[:5])
   return render_to_response('index.html', context)
 
+def add(request, dept, code):
+  try:
+    user = request.user
+    name = " ".join([dept, code])
+    print 'name', name
+    course = Course.objects.get(name=name)
+    print 'course', course
+    semester, _ = Semester.objects.get_or_create(owner=user, defaults={'year': 2011, 'semester': 'F'})
+    print "semester", semester
+    semester.courses.add(course)
+    return HttpResponse("Course added!")
+  except Exception as e:
+    print e
+    return HttpResponse("%s Failed!" % request.user)
 
 
 def course(request, *args):
@@ -92,15 +106,6 @@ def course(request, *args):
   return render_to_response('course.html', context)
 
 @login_required
-def cart(request):
-  context = {}
-  user = request.user
-  context['courses'] = get_depts()
-  context['user'] = user
-  context['recommended'] = unpack(recommend(user)[:5])
-  return render_to_response('cart.html', context)
-
-@login_required
 def semester(request, year, semester):
   context = {}
   user = request.user
@@ -122,7 +127,46 @@ def transcript_import(request):
 
 @login_required
 def transcript_import_submit(request):
-  return HttpResponse(request.POST['courses'])
+  user = request.user
+
+  alldata = request.POST['courses']
+  data = []
+  errors = []
+  successes = []
+  for line in alldata.split("\n"):
+    if line and (line.strip() != "(parsed)"):
+      try:
+        semester, coursesdata = line.split(":")
+        semester = semester.strip()
+        courses = []
+        for x in coursesdata.split(","):
+          try:
+            dept, num = x.strip().split()
+            courses.append("%s %d" % (dept, int(num)))
+          except:
+            errors.append("<b>Could not parse course:</b> " + x)
+        semester_year = int(semester[:4])
+        semester_season = dict(zip('abc','SUF'))[semester[4].lower()]
+        data.append((semester_year, semester_season, courses))
+      except:
+        errors.append("<b>Could not parse line:</b> " + line)
+
+  Semester.objects.filter(owner=user).delete()
+  for (year, season, courses) in data:
+    found_courses = Course.objects.filter(name__in=courses)
+    found_courses_names = [c.name for c in found_courses]
+    sem = Semester(owner=user, year=year, semester=season)
+    sem.save()
+    sem.courses.add(*found_courses)
+    sem.save()
+    successes.append("<b>Added:</b> (semester %d%s) %s" %
+                     (year, season, found_courses_names))
+    lost_courses = list(set(courses) - set(found_courses_names))
+    if lost_courses:
+      errors.append("<b>Could not find courses:</b> (semester %d%s) %s" %
+                    (year, season, lost_courses))
+    
+  return HttpResponse("<br>".join(successes) + "<hr>" + "<br>".join(errors))
 
 from django.contrib.auth import authenticate, login
 

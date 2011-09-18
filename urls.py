@@ -8,12 +8,12 @@ print admin.autodiscover()
 print "autodiscovered.."
 
 urlpatterns = patterns('',
-    (r'^cart', cart),
     (r'^options', options),
-    (r'^course/(\w+)/(\w+)/$', course),
-    (r'^course/(\w+)/$', course),
-    (r'^semester/(\d{4})/(\w+)/$', semester),
-    (r'^admin/', include(admin.site.urls)),
+    (r'^course/(\w+)/(\w+)/?$', course),
+    (r'^course/(\w+)/?$', course),
+    (r'^add/(\w+)/(\w+)/?', add),
+    (r'^semester/(\d{4})/(\w+)/?$', semester),
+    (r'^admin/?', include(admin.site.urls)),
     (r'^transcript-import/?$', transcript_import),
     (r'^transcript-import/submit$', transcript_import_submit),
     (r'^accounts/login/$', 'django.contrib.auth.views.login'), 
