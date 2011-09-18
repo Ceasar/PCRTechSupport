@@ -92,15 +92,6 @@ def course(request, *args):
   return render_to_response('course.html', context)
 
 @login_required
-def cart(request):
-  context = {}
-  user = request.user
-  context['courses'] = get_depts()
-  context['user'] = user
-  context['recommended'] = unpack(recommend(user)[:5])
-  return render_to_response('cart.html', context)
-
-@login_required
 def semester(request, year, semester):
   context = {}
   user = request.user
