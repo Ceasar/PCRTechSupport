@@ -26,10 +26,7 @@ def get_depts():
   raw_depts = api('depts')
   depts = []
   for dept in raw_depts['values']:
-    print dept
-    print dept['id']
     depts.append(dept['id'])
-    print depts
   return depts
 
 def get_courses():
@@ -58,6 +55,7 @@ def dept_courses(dept):
     courses.append(history['name'])
   return courses
 
+
 def options(request):
   dept = request.GET['dept']
   context = {'courses': dept_courses(dept)}
@@ -70,13 +68,27 @@ def index(request):
   context['recommended'] = unpack(recommend(user)[:5])
   return render_to_response('index.html', context)
 
-def course(request, id):
-  context = RequestContext(request, api('course', id))
+
+
+def course(request, *args):
+  try:
+    id = int(arg[1])
+  except:
+    #must be a name
+    try:
+      name = " ".join(request.path[1:-1].split("/")[1:])
+      print name
+      course = Course.objects.get(name=name)
+      print course
+    except:
+      return HttpResponse("Error!")
+    id = course.course_id
+  context = RequestContext(request, api('course', str(id)))
   user = request.user
   context['courses'] = get_depts()
   context['user'] = user
   context['recommended'] = unpack(recommend(user)[:5])
-  context['reviews'] = api('course', id, 'reviews')
+  context['reviews'] = api('course', str(id), 'reviews')
   return render_to_response('course.html', context)
 
 @login_required

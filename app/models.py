@@ -11,13 +11,14 @@ class UserProfile(models.Model):
 class Course(models.Model):
   #technically, this is all we need since we can just query
   #for the rest
-  course_id = models.IntegerField()
+  course_id = models.IntegerField(max_length=10)
+  name = models.CharField(max_length=100, primary_key=True)
 
   def __str__(self):
-    return "Course: %s" % self.course_id
+    return self.name
 
   def get_absolute_url(self):
-    return "/courses/%s/" % self.course_id
+    return "/courses/%s/" % self.id
 
 class Semester(models.Model):
   owner = models.ForeignKey(User, related_name="semesters")
