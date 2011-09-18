@@ -14,7 +14,7 @@ $(document).ready(function() {
 	var url = "http://localhost:8000/course/" + ($(this).val()).replace(" ", "/");
 	$.get(url,
 	      function(data) {
-		  $("#classInfo").html(data);
+		  $.colorbox({html: data});
 	      });
     });
 });
